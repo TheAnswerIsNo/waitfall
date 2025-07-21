@@ -1,0 +1,4 @@
+com.waitfall.framework.core.config.RedisConfig
+com.waitfall.framework.core.config.SwaggerConfig
+com.waitfall.framework.core.config.JacksonConfig
+com.waitfall.framework.core.config.MybatisPlusConfig
