@@ -47,4 +47,8 @@ public class LoginService extends BaseService {
     public void logout() {
         StpUtil.logout();
     }
+
+    public UserInfoVO getInfo() {
+        return userService.getUserInfo(getUserId());
+    }
 }

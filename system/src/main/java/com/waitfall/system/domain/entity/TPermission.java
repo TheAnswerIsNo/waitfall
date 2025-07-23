@@ -25,7 +25,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TPermission extends BaseEntity{
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_ID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
     private String id;
 
     @Column(value = "parent_id",comment = "父级ID",type = MysqlTypeConstant.VARCHAR,length = 45,notNull = true,defaultValueType = DefaultValueEnum.EMPTY_STRING)

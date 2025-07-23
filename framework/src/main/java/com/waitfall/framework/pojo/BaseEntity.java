@@ -3,10 +3,7 @@ package com.waitfall.framework.pojo;
 import com.waitfall.framework.core.handle.UserIdAutoFillHandler;
 import lombok.Data;
 import org.dromara.autotable.annotation.mysql.MysqlTypeConstant;
-import org.dromara.mpe.autofill.annotation.InsertFillData;
-import org.dromara.mpe.autofill.annotation.InsertFillTime;
-import org.dromara.mpe.autofill.annotation.InsertUpdateFillTime;
-import org.dromara.mpe.autofill.annotation.UpdateFillData;
+import org.dromara.mpe.autofill.annotation.*;
 import org.dromara.mpe.autotable.annotation.Column;
 
 import java.io.Serializable;
@@ -23,7 +20,7 @@ public class BaseEntity implements Serializable {
     @Column(value = "created_by",comment = "创建人",type = MysqlTypeConstant.VARCHAR,length = 45,notNull = true)
     protected String createdBy;
 
-    @UpdateFillData(UserIdAutoFillHandler.class)
+    @InsertUpdateFillData(UserIdAutoFillHandler.class)
     @Column(value = "updated_by",comment = "最后一次更新人",type = MysqlTypeConstant.VARCHAR,length = 45,notNull = true)
     protected String updatedBy;
 

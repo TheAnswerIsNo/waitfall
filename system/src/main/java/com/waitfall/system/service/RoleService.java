@@ -52,8 +52,8 @@ public class RoleService extends BaseService {
         }
     }
 
-    public void deleteRoleByUserId(String userId){
-        tUserRoleRepository.lambdaUpdate().eq(TUserRole::getUserId, userId).remove();
+    public void deleteRoleByUserId(List<String> userId){
+        tUserRoleRepository.lambdaUpdate().in(TUserRole::getUserId, userId).remove();
     }
 
 }

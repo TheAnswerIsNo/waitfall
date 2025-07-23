@@ -25,7 +25,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TUser extends BaseEntity implements TransPojo {
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_ID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
     private String id;
 
     @Column(value = "avatar",comment = "头像",type = MysqlTypeConstant.VARCHAR,length = 512)

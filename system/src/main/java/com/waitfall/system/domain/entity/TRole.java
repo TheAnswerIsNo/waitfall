@@ -26,7 +26,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TRole extends BaseEntity{
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_ID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
     private String id;
 
     @Column(value = "name",comment = "角色名称",type = MysqlTypeConstant.VARCHAR,length = 10,notNull = true)

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +39,11 @@ public class LoginController extends BaseController {
     public SaResult logout() {
         loginService.logout();
         return SaResult.ok("注销成功");
+    }
+
+    @Operation(summary = "获取登录用户信息")
+    @GetMapping("/get/info")
+    public SaResult getInfo() {
+        return SaResult.data(loginService.getInfo());
     }
 }

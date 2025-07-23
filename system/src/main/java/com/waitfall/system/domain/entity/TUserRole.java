@@ -23,7 +23,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TUserRole{
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_ID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
     private String id;
 
     @Column(value = "user_id",comment = "用户ID",type = MysqlTypeConstant.VARCHAR,length = 45,notNull = true)

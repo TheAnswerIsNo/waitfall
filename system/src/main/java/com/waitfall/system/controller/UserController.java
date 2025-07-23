@@ -10,6 +10,7 @@ import com.waitfall.system.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.validation.constraints.NotEmpty;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class UserController extends BaseController {
     @GetMapping("/list")
     public SaResult list(@ModelAttribute @ParameterObject @Validated UserListDTO userListDTO) {
         PageVO<List<UserListVO>> list = userService.list(userListDTO);
-        return SaResult.data(list);
+        return new SaResult(SaResult.CODE_SUCCESS,"查询成功",list);
     }
 
     @Operation(summary = "新增用户")
@@ -57,9 +58,9 @@ public class UserController extends BaseController {
     }
 
     @Operation(summary = "删除用户")
-    @PostMapping("/delete/{id}")
-    public SaResult delete(@PathVariable("id") String id) {
-        userService.delete(id);
+    @PostMapping("/delete")
+    public SaResult delete(@RequestBody @NotEmpty(message = "用户id不能为空") List<String> ids) {
+        userService.delete(ids);
         return SaResult.ok("删除用户成功");
     }
 
@@ -67,7 +68,7 @@ public class UserController extends BaseController {
     @GetMapping("/detail/{id}")
     public SaResult detail(@PathVariable("id") String id) {
         UserDetailVO detail = userService.detail(id);
-        return SaResult.data(detail);
+        return new SaResult(SaResult.CODE_SUCCESS,"查询成功",detail);
     }
 
     @Operation(summary = "修改密码")

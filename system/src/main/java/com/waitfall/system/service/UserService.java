@@ -71,11 +71,11 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String id) {
+    public void delete(List<String> ids) {
         // 删除用户
-        tUserRepository.removeById(id);
+        tUserRepository.removeByIds(ids);
         // 删除用户角色关联
-        roleService.deleteRoleByUserId(id);
+        roleService.deleteRoleByUserId(ids);
     }
 
     public UserDetailVO detail(String id) {
