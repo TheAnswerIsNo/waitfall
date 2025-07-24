@@ -56,7 +56,7 @@ springdoc:
   api-docs:
     path: /v3/api-docs
 knife4j:
-  enable: true
+  enable: false
   setting:
     language: zh-CN
 minio:

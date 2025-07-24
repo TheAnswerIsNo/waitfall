@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.waitfall</groupId>
@@ -29,7 +29,8 @@
         <sa-token.version>1.44.0</sa-token.version>
         <mybatis-plus-ext.version>3.5.12-EXT872</mybatis-plus-ext.version>
         <hutool.version>5.8.39</hutool.version>
-        <knife4j.version>4.4.0</knife4j.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <springdoc.version>2.8.9</springdoc.version>
         <commons-pool2.version>2.12.1</commons-pool2.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <easy-trans.version>3.1.2</easy-trans.version>
@@ -124,6 +125,18 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!--commons-pool2-->

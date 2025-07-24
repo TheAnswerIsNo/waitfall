@@ -68,7 +68,7 @@ public class UserController extends BaseController {
     @GetMapping("/detail/{id}")
     public SaResult detail(@PathVariable("id") String id) {
         UserDetailVO detail = userService.detail(id);
-        return new SaResult(SaResult.CODE_SUCCESS,"查询成功",detail);
+        return SaResult.data(detail);
     }
 
     @Operation(summary = "修改密码")
