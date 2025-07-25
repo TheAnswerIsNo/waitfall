@@ -1,4 +1,4 @@
-package com.waitfall.framework.core.config;
+package com.waitfall.framework.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

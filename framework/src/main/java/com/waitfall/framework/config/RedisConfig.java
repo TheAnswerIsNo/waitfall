@@ -1,4 +1,4 @@
-package com.waitfall.framework.core.config;
+package com.waitfall.framework.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;

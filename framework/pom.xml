@@ -9,7 +9,7 @@
     </parent>
     <artifactId>framework</artifactId>
     <version>1.0.0</version>
-    <name>framework</name>
+    <name>${project.artifactId}</name>
     <description>framework</description>
     <packaging>jar</packaging>
 

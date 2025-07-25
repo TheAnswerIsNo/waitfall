@@ -1,4 +1,4 @@
-package com.waitfall.framework.core.handle;
+package com.waitfall.framework.handle;
 
 
 import cn.dev33.satoken.exception.NotLoginException;

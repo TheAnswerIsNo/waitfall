@@ -5,10 +5,10 @@ spring:
     time-zone: GMT+8
   servlet:
     multipart:
-      max-file-size: 2GB
+      max-file-size: 1GB
       max-request-size: 2GB
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -40,7 +40,11 @@ spring:
             max-idle: 8
             max-wait: -1ms
             min-idle: 0
-            enabled: true
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: deepseek-r1
 server:
   port: 8080
   servlet:
@@ -61,9 +65,9 @@ knife4j:
     language: zh-CN
 minio:
   endpoint: ${waitfall.minio.endpoint}
-  accessKey: ${waitfall.minio.accessKey}
-  secretKey: ${waitfall.minio.secretKey}
   bucketName: ${waitfall.minio.bucketName}
+  secret-key: ${waitfall.minio.user}
+  access-key: ${waitfall.minio.password}
 auto-table:
   enable: true
   mode: update
@@ -74,7 +78,7 @@ auto-table:
   # 自动删除自定义索引
   auto-drop-custom-index: true
   # 指定实体类所在包路径
-  model-package: com.waitfall.**.domain.entity
+  model-package: com.waitfall.*.domain.entity
   init-data:
     enable: true
     default-init-file-name: waitfall_init_data
@@ -107,7 +111,7 @@ token:
 
 sa-token:
   alone-redis:
-    database: ${waitfall.satoken.redis.database}
+    database: ${waitfall.sa-token.redis.database}
     host: ${waitfall.redis.host}
     port: ${waitfall.redis.port}
     password: ${waitfall.redis.password}
@@ -118,4 +122,3 @@ sa-token:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-        enabled: true

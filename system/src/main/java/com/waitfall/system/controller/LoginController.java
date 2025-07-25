@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.util.SaResult;
 import com.waitfall.framework.pojo.BaseController;
 import com.waitfall.system.domain.dto.user.LoginDTO;
-import com.waitfall.system.domain.vo.user.UserInfoVO;
 import com.waitfall.system.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,8 +29,8 @@ public class LoginController extends BaseController {
     @Operation(summary = "登录")
     @PostMapping("/login")
     public SaResult login(@RequestBody @Validated LoginDTO loginDTO) {
-        UserInfoVO userInfoVO = loginService.login(loginDTO);
-        return new SaResult(SaResult.CODE_SUCCESS,"登录成功",userInfoVO);
+        loginService.login(loginDTO);
+        return SaResult.ok("登录成功");
     }
 
     @Operation(summary = "注销")

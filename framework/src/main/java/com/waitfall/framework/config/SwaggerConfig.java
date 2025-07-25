@@ -1,4 +1,4 @@
-package com.waitfall.framework.core.config;
+package com.waitfall.framework.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

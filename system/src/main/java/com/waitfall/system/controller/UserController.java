@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2025/7/11 13:37
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/system/user")
 @Tag(name = "用户", description = "用户相关接口")
 public class UserController extends BaseController {
 
@@ -33,7 +33,7 @@ public class UserController extends BaseController {
     @GetMapping("/list")
     public SaResult list(@ModelAttribute @ParameterObject @Validated UserListDTO userListDTO) {
         PageVO<List<UserListVO>> list = userService.list(userListDTO);
-        return new SaResult(SaResult.CODE_SUCCESS,"查询成功",list);
+        return SaResult.data(list);
     }
 
     @Operation(summary = "新增用户")

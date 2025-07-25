@@ -11,7 +11,7 @@
     <groupId>com.waitfall</groupId>
     <artifactId>waitfall</artifactId>
     <version>1.0.0</version>
-    <name>waitfall</name>
+    <name>${project.artifactId}</name>
     <description>waitfall</description>
     <packaging>pom</packaging>
 
@@ -19,11 +19,14 @@
         <module>server</module>
         <module>system</module>
         <module>framework</module>
+        <module>ai</module>
+        <module>oss</module>
     </modules>
 
     <properties>
         <java.version>21</java.version>
         <spring-boot.version>3.3.5</spring-boot.version>
+        <spring-ai.version>1.0.0-M6</spring-ai.version>
         <lombok.version>1.18.38</lombok.version>
         <mysql.version>8.4.0</mysql.version>
         <sa-token.version>1.44.0</sa-token.version>
@@ -34,6 +37,7 @@
         <commons-pool2.version>2.12.1</commons-pool2.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <easy-trans.version>3.1.2</easy-trans.version>
+        <minio.version>8.5.17</minio.version>
         <!--模块-->
         <system.version>1.0.0</system.version>
         <server.version>1.0.0</server.version>
@@ -57,12 +61,23 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+            <version>${spring-ai.version}</version>
         </dependency>
 
         <!--mysql-->
@@ -169,6 +184,13 @@
             <groupId>org.dromara</groupId>
             <artifactId>easy-trans-mybatis-plus-extend</artifactId>
             <version>${easy-trans.version}</version>
+        </dependency>
+
+        <!--minio-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
         </dependency>
 
     </dependencies>

@@ -1,6 +1,6 @@
 package com.waitfall.framework.pojo;
 
-import com.waitfall.framework.core.handle.UserIdAutoFillHandler;
+import com.waitfall.framework.handle.UserIdAutoFillHandler;
 import lombok.Data;
 import org.dromara.autotable.annotation.mysql.MysqlTypeConstant;
 import org.dromara.mpe.autofill.annotation.*;

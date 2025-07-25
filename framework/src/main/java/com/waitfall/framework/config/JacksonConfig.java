@@ -1,4 +1,4 @@
-package com.waitfall.framework.core.config;
+package com.waitfall.framework.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

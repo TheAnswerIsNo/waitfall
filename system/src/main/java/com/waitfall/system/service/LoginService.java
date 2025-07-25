@@ -23,7 +23,7 @@ public class LoginService extends BaseService {
     @Resource
     private UserService userService;
 
-    public UserInfoVO login(LoginDTO loginDTO) {
+    public void login(LoginDTO loginDTO) {
 
         TUser userByAccount = userService.getUserByAccount(loginDTO.getAccount());
         // 校验账号是否存在
@@ -36,8 +36,6 @@ public class LoginService extends BaseService {
         }
 
         publicLogin(userByAccount.getId());
-
-        return this.userService.getUserInfo(getUserId());
     }
 
     private void publicLogin(String userId) {

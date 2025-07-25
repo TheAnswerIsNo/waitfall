@@ -7,10 +7,10 @@
         <artifactId>waitfall</artifactId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>system</artifactId>
+    <artifactId>ai</artifactId>
     <version>1.0.0</version>
     <name>${project.artifactId}</name>
-    <description>system</description>
+    <description>ai</description>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -20,4 +20,6 @@
             <version>1.0.0</version>
         </dependency>
     </dependencies>
+
+
 </project>
