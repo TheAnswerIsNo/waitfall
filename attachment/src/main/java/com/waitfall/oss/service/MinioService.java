@@ -49,7 +49,7 @@ public class MinioService implements OssService {
     public List<AttachmentVO> uploadFileBatch(List<MultipartFile> files,String objectId) {
         List<OssUploadVO> ossUploadVOList = minioUtil.uploadFileBatch(files);
         List<TAttachment> tAttachmentList = AttachmentConvert.INSTANCE.parseOssToEntity(ossUploadVOList,objectId);
-        tAttachmentRepository.saveBatch(tAttachmentList,1000);
+        tAttachmentRepository.saveBatch(tAttachmentList,tAttachmentList.size());
         return AttachmentConvert.INSTANCE.parseEntityToListVO(tAttachmentList);
     }
 

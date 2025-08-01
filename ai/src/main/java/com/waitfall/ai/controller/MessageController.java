@@ -1,8 +1,9 @@
 package com.waitfall.ai.controller;
 
-import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.util.SaResult;
+import com.waitfall.ai.domain.dto.message.MessageSendDTO;
 import com.waitfall.ai.service.MessageService;
+import com.waitfall.framework.pojo.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -10,10 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 /**
@@ -24,7 +23,7 @@ import reactor.core.publisher.Flux;
 @Tag(name = "聊天消息", description = "聊天消息相关接口")
 @RestController
 @RequestMapping("/ai/message")
-public class MessageController {
+public class MessageController extends BaseController {
 
     @Resource
     private ChatClient chatClient;
@@ -43,11 +42,10 @@ public class MessageController {
         return SaResult.data(content);
     }
 
-    @SaIgnore
     @Operation(summary = "发送消息-流式")
     @PostMapping(value = "/send/stream",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<SaResult> sendStream(@RequestParam(defaultValue = "讲个笑话") String message) {
-        return messageService.sendStream(message);
+    public Flux<SaResult> sendStream(@RequestBody @Validated MessageSendDTO  messageSendDTO) {
+        return messageService.sendStream(messageSendDTO);
     }
 
 }
