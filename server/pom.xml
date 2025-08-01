@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>com.waitfall</groupId>
-            <artifactId>oss</artifactId>
+            <artifactId>attachment</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

@@ -1,6 +1,5 @@
 package com.waitfall.system.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.waitfall.framework.pojo.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +25,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TRole extends BaseEntity{
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45)
     private String id;
 
     @Column(value = "name",comment = "角色名称",type = MysqlTypeConstant.VARCHAR,length = 10,notNull = true)

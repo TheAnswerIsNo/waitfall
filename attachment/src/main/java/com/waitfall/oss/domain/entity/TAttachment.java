@@ -1,6 +1,5 @@
 package com.waitfall.oss.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.waitfall.framework.pojo.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import org.dromara.mpe.autotable.annotation.Table;
 import org.dromara.mpe.processer.annotation.AutoRepository;
 
 /**
- * @author by 25124
+ * @author by 秋
  * @date 2025/7/25 18:02
  */
 @Data
@@ -24,7 +23,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TAttachment extends BaseEntity {
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45)
     private String id;
 
     @Column(value = "name",comment = "文件名称",type = MysqlTypeConstant.VARCHAR,length = 50,notNull = true)
@@ -37,10 +36,13 @@ public class TAttachment extends BaseEntity {
     private String objectId;
 
     @Column(value = "url",comment = "文件路径",type = MysqlTypeConstant.VARCHAR,length = 255,notNull = true)
-    private Boolean url;
+    private String url;
 
-    @Column(value = "size",comment = "文件大小",type = MysqlTypeConstant.DOUBLE,notNull = true)
-    private String size;
+    @Column(value = "size",comment = "文件大小",type = MysqlTypeConstant.BIGINT,notNull = true)
+    private Long size;
+
+    @Column(value = "content_type",comment = "文件类型",type = MysqlTypeConstant.VARCHAR,length = 20,notNull = true)
+    private String contentType;
 
     @Column(value = "suffix",comment = "文件后缀",type = MysqlTypeConstant.VARCHAR,length = 10,notNull = true)
     private String suffix;

@@ -20,7 +20,7 @@
         <module>system</module>
         <module>framework</module>
         <module>ai</module>
-        <module>oss</module>
+        <module>attachment</module>
     </modules>
 
     <properties>
@@ -57,11 +57,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <dependency>

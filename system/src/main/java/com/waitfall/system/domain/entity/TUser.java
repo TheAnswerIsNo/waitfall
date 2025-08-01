@@ -1,6 +1,5 @@
 package com.waitfall.system.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.waitfall.framework.pojo.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +24,7 @@ import org.dromara.mpe.processer.annotation.AutoRepository;
 @AutoRepository
 public class TUser extends BaseEntity implements TransPojo {
 
-    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45,mode = IdType.ASSIGN_UUID)
+    @ColumnId(value = "id",comment = "ID",type = MysqlTypeConstant.VARCHAR,length = 45)
     private String id;
 
     @Column(value = "avatar",comment = "头像",type = MysqlTypeConstant.VARCHAR,length = 512)

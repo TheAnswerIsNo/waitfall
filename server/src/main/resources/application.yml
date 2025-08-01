@@ -44,7 +44,7 @@ spring:
     ollama:
       base-url: http://localhost:11434
       chat:
-        model: deepseek-r1
+        model: qwen3:8b
 server:
   port: 8080
   servlet:
@@ -97,6 +97,7 @@ mybatis-plus:
       logic-delete-field: deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
+      id-type: assign_id
 easy-trans:
   #启用redis缓存 如果不用redis请设置为false
   is-enable-redis: false
