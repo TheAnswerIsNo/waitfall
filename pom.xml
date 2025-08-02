@@ -97,6 +97,12 @@
             <version>${sa-token.version}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>cn.dev33</groupId>-->
+<!--            <artifactId>sa-token-reactor-spring-boot-starter</artifactId>-->
+<!--            <version>${sa-token.version}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-jwt</artifactId>

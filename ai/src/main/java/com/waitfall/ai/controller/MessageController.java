@@ -2,6 +2,7 @@ package com.waitfall.ai.controller;
 
 import cn.dev33.satoken.util.SaResult;
 import com.waitfall.ai.domain.dto.message.MessageSendDTO;
+import com.waitfall.ai.domain.vo.message.MessageListVO;
 import com.waitfall.ai.service.MessageService;
 import com.waitfall.framework.pojo.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * @author by 秋
@@ -47,5 +50,13 @@ public class MessageController extends BaseController {
     public Flux<SaResult> sendStream(@RequestBody @Validated MessageSendDTO  messageSendDTO) {
         return messageService.sendStream(messageSendDTO);
     }
+
+    @Operation(summary = "获取会话消息")
+    @GetMapping(value = "/list/{conversationId}")
+    public SaResult list(@PathVariable("conversationId") String conversationId) {
+        List<MessageListVO> list = messageService.list(conversationId);
+        return SaResult.data(list);
+    }
+
 
 }

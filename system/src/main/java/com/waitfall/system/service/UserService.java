@@ -1,11 +1,11 @@
 package com.waitfall.system.service;
 
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.waitfall.framework.pojo.BaseEntity;
+import com.waitfall.framework.pojo.CommonException;
 import com.waitfall.framework.pojo.PageVO;
 import com.waitfall.system.convert.user.UserConvert;
 import com.waitfall.system.domain.dto.user.*;
@@ -81,7 +81,7 @@ public class UserService {
     public UserDetailVO detail(String id) {
         TUser tUser = tUserRepository.getById(id);
         if (ObjUtil.isEmpty(tUser)){
-            throw new SaTokenException(400,"用户不存在");
+            throw new CommonException(400,"用户不存在");
         }
 
         // 获取角色
@@ -93,15 +93,15 @@ public class UserService {
     public void updatePassword(UserUpdatePasswordDTO userUpdatePasswordDTO) {
         TUser tUser = tUserRepository.getById(userUpdatePasswordDTO.getId());
         if (ObjUtil.isEmpty(tUser)){
-            throw new SaTokenException(400,"用户不存在");
+            throw new CommonException(400,"用户不存在");
         }
         // 验证原密码
         if (!BCrypt.checkpw(userUpdatePasswordDTO.getOldPassword(), tUser.getPassword())){
-            throw new SaTokenException(400,"原密码错误");
+            throw new CommonException(400,"原密码错误");
         }
         // 校验两次密码是否一样
         if (userUpdatePasswordDTO.getOldPassword().equals(userUpdatePasswordDTO.getNewPassword())){
-            throw new SaTokenException(400,"旧密码和新密码不能一样");
+            throw new CommonException(400,"旧密码和新密码不能一样");
         }
         // 加密
         tUser.setPassword(BCrypt.hashpw(userUpdatePasswordDTO.getNewPassword()));

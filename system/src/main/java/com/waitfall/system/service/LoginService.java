@@ -5,6 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.waitfall.framework.pojo.BaseService;
+import com.waitfall.framework.pojo.CommonException;
 import com.waitfall.system.domain.dto.user.LoginDTO;
 import com.waitfall.system.domain.entity.TUser;
 import com.waitfall.system.domain.vo.user.UserInfoVO;
@@ -28,7 +29,7 @@ public class LoginService extends BaseService {
         TUser userByAccount = userService.getUserByAccount(loginDTO.getAccount());
         // 校验账号是否存在
         if (ObjUtil.isEmpty(userByAccount)) {
-            throw new SaTokenException(400,"账号不存在");
+            throw new CommonException(400,"账号不存在");
         }
         // 校验密码是否正确
         if (!BCrypt.checkpw(loginDTO.getPassword(), userByAccount.getPassword())) {

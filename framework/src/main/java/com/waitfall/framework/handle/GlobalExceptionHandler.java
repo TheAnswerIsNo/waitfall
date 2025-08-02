@@ -3,8 +3,8 @@ package com.waitfall.framework.handle;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaResult;
+import com.waitfall.framework.pojo.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,7 +21,6 @@ import java.util.List;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public SaResult validateException(MethodArgumentNotValidException e) {
@@ -45,11 +44,13 @@ public class GlobalExceptionHandler {
         return new SaResult(404, "资源不存在",null);
     }
 
-    /*
-        * 自定义异常，直接弹窗提示
+    /**
+     * 自定义异常，直接弹窗提示
+     * @param ex 自定义异常
+     * @return 自定义异常的错误码和错误提示
      */
-    @ExceptionHandler(SaTokenException.class)
-    public SaResult exceptionHandler(SaTokenException ex) {
+    @ExceptionHandler(CommonException.class)
+    public SaResult exceptionHandler(CommonException ex) {
         return new SaResult(ex.getCode(), ex.getMessage(),null);
     }
 
