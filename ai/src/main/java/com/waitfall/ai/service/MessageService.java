@@ -2,6 +2,7 @@ package com.waitfall.ai.service;
 
 import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.waitfall.ai.domain.dto.message.MessageSendDTO;
@@ -41,10 +42,14 @@ public class MessageService extends BaseService {
 
     @Transactional
     public Flux<SaResult> sendStream(MessageSendDTO messageSendDTO) {
+        String userSendMessage = messageSendDTO.getMessage();
+        if (BooleanUtil.isFalse(messageSendDTO.getThink())){
+            userSendMessage = userSendMessage + "/no_think";
+        }
         // 保存当前用户消息
         TMessage userMessage = TMessage.builder()
                 .conversationId(messageSendDTO.getConversationId())
-                .messageType(MessageType.USER.getValue())
+                .type(MessageType.USER)
                 .content(messageSendDTO.getMessage())
                 .build();
         tMessageRepository.save(userMessage);
@@ -52,7 +57,7 @@ public class MessageService extends BaseService {
         TMessage assistantMessage = TMessage.builder()
                 .replyId(userMessage.getId())
                 .conversationId(messageSendDTO.getConversationId())
-                .messageType(MessageType.ASSISTANT.getValue())
+                .type(MessageType.ASSISTANT)
                 .build();
         tMessageRepository.save(assistantMessage);
         // 构建会话记忆
@@ -63,7 +68,7 @@ public class MessageService extends BaseService {
         StringBuffer stringBuffer = new StringBuffer();
         return chatClient
                 .prompt(prompt)
-                .user(messageSendDTO.getMessage() + "/no_think")
+                .user(userSendMessage)
                 .stream()
                 .chatResponse().map(chunk -> {
                     String newContent = ObjUtil.isNotNull(chunk.getResult()) ? chunk.getResult().getOutput().getText() : StrUtil.EMPTY;
@@ -85,7 +90,7 @@ public class MessageService extends BaseService {
     }
 
     private List<Message> buildHistoryMessageList(MessageSendDTO messageSendDTO) {
-        // 查询历史记录 仅保留十组对话 TODO 后续改为配置
+        // 查询历史记录
         List<TMessage> list = tMessageRepository.lambdaQuery()
                 .eq(TMessage::getConversationId, messageSendDTO.getConversationId())
                 .orderByAsc(TMessage::getCreateTime)
@@ -93,23 +98,23 @@ public class MessageService extends BaseService {
         if (CollUtil.isEmpty(list)) {
             return List.of();
         }
-        List<TMessage> historyMessageList = new ArrayList<>(10 * 2);
+        List<TMessage> historyMessageList = new ArrayList<>(messageSendDTO.getMaxMessages());
         for (int i = list.size() - 1; i >= 0; i--) {
             TMessage assistantMessage = CollUtil.get(list, i);
-            if (assistantMessage == null || assistantMessage.getReplyId() == null) {
+            if (ObjUtil.isNull(assistantMessage) || StrUtil.isBlank(assistantMessage.getReplyId())) {
                 continue;
             }
             TMessage userMessage = CollUtil.get(list, i - 1);
-            if (userMessage == null
+            if (ObjUtil.isNull(userMessage)
                     || ObjUtil.notEqual(assistantMessage.getReplyId(), userMessage.getId())
-                    || StrUtil.isEmpty(assistantMessage.getContent())) {
+                    || StrUtil.isBlank(assistantMessage.getContent())) {
                 continue;
             }
             // 由于后续要 reverse 反转，所以先添加 assistantMessage
             historyMessageList.add(assistantMessage);
             historyMessageList.add(userMessage);
             // 超过最大上下文，结束
-            if (historyMessageList.size() >= 10 * 2) {
+            if (historyMessageList.size() >= messageSendDTO.getMaxMessages()) {
                 break;
             }
         }
@@ -121,10 +126,13 @@ public class MessageService extends BaseService {
         for (TMessage tMessage : historyMessageList) {
             // 一个userMessage和一个assistantMessage为一组 根据replyId
             // 根据消息类型创建对应的消息对象
-            if (MessageType.USER.getValue().equals(tMessage.getMessageType())) {
-                messageList.add(new UserMessage(tMessage.getContent()));
-            } else if (MessageType.ASSISTANT.getValue().equals(tMessage.getMessageType())) {
-                messageList.add(new AssistantMessage(tMessage.getContent()));
+            switch (tMessage.getType()) {
+                case USER:
+                    messageList.add(new UserMessage(tMessage.getContent()));
+                    break;
+                case ASSISTANT:
+                    messageList.add(new AssistantMessage(tMessage.getContent()));
+                    break;
             }
         }
         return messageList;

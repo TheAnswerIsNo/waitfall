@@ -24,6 +24,7 @@ public class UserIdAutoFillHandler implements AutoFillHandler<String> {
      */
     @Override
     public String getVal(Object object, Class<?> clazz, Field field) {
+        // 主要为解决AI对话时异步更新获取不到userId问题
         // 若当前用户拿不到，则返回原始值，
         // 手动从请求头获取
         HttpServletRequest request = getRequest();

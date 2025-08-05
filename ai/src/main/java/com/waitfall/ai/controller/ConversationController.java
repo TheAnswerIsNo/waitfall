@@ -27,8 +27,8 @@ public class ConversationController {
 
     @Operation(summary = "获取会话列表")
     @GetMapping("/list")
-    public SaResult list(@RequestParam("userId") String userId) {
-        List<ConversationListVO> list = conversationService.list(userId);
+    public SaResult list() {
+        List<ConversationListVO> list = conversationService.list();
         return SaResult.data(list);
     }
 

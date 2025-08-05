@@ -31,4 +31,7 @@ public class TConversation extends BaseEntity {
 
     @Column(value = "title",comment = "会话标题",type = MysqlTypeConstant.VARCHAR,length = 45)
     private String title;
+
+    @Column(value = "top",comment = "是否置顶",type = MysqlTypeConstant.TINYINT,length = 1,defaultValue = "0")
+    private Boolean top;
 }

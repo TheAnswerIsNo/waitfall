@@ -22,8 +22,12 @@ public class ConversationService extends BaseService {
     @Resource
     private TConversationRepository tConversationRepository;
 
-    public List<ConversationListVO> list(String userId) {
-        List<TConversation> list = tConversationRepository.lambdaQuery().eq(TConversation::getUserId, userId).list();
+    public List<ConversationListVO> list() {
+        List<TConversation> list = tConversationRepository.lambdaQuery()
+                .eq(TConversation::getUserId, getUserId())
+                .orderByDesc(TConversation::getTop)
+                .orderByDesc(TConversation::getCreateTime)
+                .list();
         return ConversationConvert.INSTANCE.parseToListVO(list);
     }
 
