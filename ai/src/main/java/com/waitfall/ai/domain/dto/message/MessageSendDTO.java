@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 public class MessageSendDTO {
 
     @Schema(description = "会话ID")
-    @NotBlank(message = "会话ID不能为空")
     private String conversationId;
 
     @Schema(description = "消息内容")

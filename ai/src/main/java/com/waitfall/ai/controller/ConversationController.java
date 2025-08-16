@@ -1,7 +1,6 @@
 package com.waitfall.ai.controller;
 
 import cn.dev33.satoken.util.SaResult;
-import com.waitfall.ai.domain.dto.conversation.ConversationAddDTO;
 import com.waitfall.ai.domain.dto.conversation.ConversationRenameDTO;
 import com.waitfall.ai.domain.vo.conversation.ConversationListVO;
 import com.waitfall.ai.service.ConversationService;
@@ -34,9 +33,9 @@ public class ConversationController {
 
     @Operation(summary = "添加会话")
     @PostMapping("/add")
-    public SaResult add(@RequestBody @Validated ConversationAddDTO conversationAddDTO) {
-        conversationService.add(conversationAddDTO);
-        return SaResult.ok();
+    public SaResult add() {
+        String id = conversationService.add();
+        return SaResult.data(id);
     }
 
     @Operation(summary = "删除会话")

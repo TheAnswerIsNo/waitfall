@@ -8,6 +8,7 @@ import com.waitfall.framework.pojo.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -47,7 +48,9 @@ public class MessageController extends BaseController {
 
     @Operation(summary = "发送消息-流式")
     @PostMapping(value = "/send/stream",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<SaResult> sendStream(@RequestBody @Validated MessageSendDTO  messageSendDTO) {
+    public Flux<SaResult> sendStream(@RequestBody @Validated MessageSendDTO  messageSendDTO, HttpServletResponse httpServletResponse) {
+        // 设置响应头，防止sse失败
+        httpServletResponse.setHeader("Cache-Control", "no-cache, no-transform");
         return messageService.sendStream(messageSendDTO);
     }
 

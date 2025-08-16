@@ -19,7 +19,7 @@ public class AiConfig {
     public ChatClient chatClient(OllamaChatModel openAIChatModel) {
         // 构建ChatClient实例
         return ChatClient.builder(openAIChatModel)
-                .defaultSystem("你的名字叫小秋，是等秋管理系统的小助手。你可以回答各种问题，帮助用户解决问题。")
+                .defaultSystem("你的名字叫小秋。")
                 .defaultAdvisors(new SimpleLoggerAdvisor())
                 .defaultOptions(ChatOptions.builder()
                         .temperature(0.5).build())

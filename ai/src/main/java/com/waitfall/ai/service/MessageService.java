@@ -5,10 +5,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
+import com.waitfall.ai.convert.message.MessageConvert;
 import com.waitfall.ai.domain.dto.message.MessageSendDTO;
 import com.waitfall.ai.domain.entity.TMessage;
 import com.waitfall.ai.domain.repository.TMessageRepository;
 import com.waitfall.ai.domain.vo.message.MessageListVO;
+import com.waitfall.ai.domain.vo.message.MessageSendVO;
 import com.waitfall.framework.pojo.BaseService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -40,11 +42,17 @@ public class MessageService extends BaseService {
     @Resource
     private TMessageRepository tMessageRepository;
 
+    @Resource
+    private ConversationService conversationService;
+
     @Transactional
     public Flux<SaResult> sendStream(MessageSendDTO messageSendDTO) {
         String userSendMessage = messageSendDTO.getMessage();
         if (BooleanUtil.isFalse(messageSendDTO.getThink())){
             userSendMessage = userSendMessage + "/no_think";
+        }
+        if (StrUtil.isBlank(messageSendDTO.getConversationId())){
+            messageSendDTO.setConversationId(conversationService.add());
         }
         // 保存当前用户消息
         TMessage userMessage = TMessage.builder()
@@ -73,12 +81,13 @@ public class MessageService extends BaseService {
                 .chatResponse().map(chunk -> {
                     String newContent = ObjUtil.isNotNull(chunk.getResult()) ? chunk.getResult().getOutput().getText() : StrUtil.EMPTY;
                     stringBuffer.append(newContent);
-                    return SaResult.data(newContent);
+                    return SaResult.data(MessageSendVO.builder().conversationId(messageSendDTO.getConversationId()).content(newContent).build());
                 })
                 .doOnComplete(()->{
                     // 保存对话消息
                     assistantMessage.setContent(stringBuffer.toString());
                     tMessageRepository.updateById(assistantMessage);
+                    // TODO 修改会话名称
                 })
                 .doOnError(throwable -> {
                     log.error("[sendStream][message({}) 发生异常]", messageSendDTO.getMessage(), throwable);
@@ -93,7 +102,7 @@ public class MessageService extends BaseService {
         // 查询历史记录
         List<TMessage> list = tMessageRepository.lambdaQuery()
                 .eq(TMessage::getConversationId, messageSendDTO.getConversationId())
-                .orderByAsc(TMessage::getCreateTime)
+                .orderByAsc(TMessage::getId)
                 .list();
         if (CollUtil.isEmpty(list)) {
             return List.of();
@@ -141,15 +150,12 @@ public class MessageService extends BaseService {
     public List<MessageListVO> list(String conversationId) {
         List<TMessage> list = tMessageRepository.lambdaQuery()
                 .eq(TMessage::getConversationId, conversationId)
-                .orderByDesc(TMessage::getCreateTime)
+                .orderByAsc(TMessage::getId)
                 .list();
         if (CollUtil.isEmpty(list)) {
             return List.of();
         }
-        List<MessageListVO> messageListVOList = new ArrayList<>();
-        for (TMessage tMessage : list) {
-            messageListVOList.add(new MessageListVO(tMessage.getId(), tMessage.getContent()));
-        }
-        return messageListVOList;
+
+        return MessageConvert.INSTANCE.parseToListVO(list);
     }
 }

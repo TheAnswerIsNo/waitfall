@@ -36,6 +36,6 @@ public class TMessage extends BaseEntity {
     @Column(value = "type",comment = "消息类型",type = MysqlTypeConstant.ENUM,length = 45, notNull = true)
     private MessageType type;
 
-    @Column(value = "content",comment = "消息内容",type = MysqlTypeConstant.VARCHAR,length = 2000)
+    @Column(value = "content",comment = "消息内容",type = MysqlTypeConstant.LONGTEXT)
     private String content;
 }
