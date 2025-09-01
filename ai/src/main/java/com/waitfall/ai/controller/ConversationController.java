@@ -31,13 +31,6 @@ public class ConversationController {
         return SaResult.data(list);
     }
 
-    @Operation(summary = "添加会话")
-    @PostMapping("/add")
-    public SaResult add() {
-        String id = conversationService.add();
-        return SaResult.data(id);
-    }
-
     @Operation(summary = "删除会话")
     @DeleteMapping("/delete")
     public SaResult delete(@RequestParam("id") String id) {
@@ -48,7 +41,7 @@ public class ConversationController {
     @Operation(summary = "重命名会话")
     @PostMapping("/rename")
     public SaResult rename(@RequestBody @Validated ConversationRenameDTO conversationRenameDTO) {
-        conversationService.rename(conversationRenameDTO);
+        conversationService.rename(conversationRenameDTO.getId(), conversationRenameDTO.getTitle());
         return SaResult.ok("重命名成功");
     }
     

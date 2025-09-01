@@ -1,6 +1,5 @@
 package com.waitfall.ai.convert.conversation;
 
-import com.waitfall.ai.domain.dto.conversation.ConversationRenameDTO;
 import com.waitfall.ai.domain.entity.TConversation;
 import com.waitfall.ai.domain.vo.conversation.ConversationListVO;
 import org.mapstruct.Mapper;
@@ -19,5 +18,4 @@ public interface ConversationConvert {
 
     List<ConversationListVO> parseToListVO(List<TConversation> tConversationList);
 
-    TConversation parseRenameToEntity(ConversationRenameDTO conversationRenameDTO);
 }

@@ -1,6 +1,5 @@
 package com.waitfall.system.service;
 
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.crypto.digest.BCrypt;
@@ -33,7 +32,7 @@ public class LoginService extends BaseService {
         }
         // 校验密码是否正确
         if (!BCrypt.checkpw(loginDTO.getPassword(), userByAccount.getPassword())) {
-            throw new SaTokenException(400,"密码错误");
+            throw new CommonException(400,"密码错误");
         }
 
         publicLogin(userByAccount.getId());

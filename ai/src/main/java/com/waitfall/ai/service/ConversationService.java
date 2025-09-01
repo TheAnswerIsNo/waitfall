@@ -1,7 +1,6 @@
 package com.waitfall.ai.service;
 
 import com.waitfall.ai.convert.conversation.ConversationConvert;
-import com.waitfall.ai.domain.dto.conversation.ConversationRenameDTO;
 import com.waitfall.ai.domain.entity.TConversation;
 import com.waitfall.ai.domain.repository.TConversationRepository;
 import com.waitfall.ai.domain.vo.conversation.ConversationListVO;
@@ -30,10 +29,10 @@ public class ConversationService extends BaseService {
         return ConversationConvert.INSTANCE.parseToListVO(list);
     }
 
-    public String add() {
+    public String add(String title) {
         TConversation tConversation = TConversation.builder()
                 .userId(getUserId())
-                .title("新会话")
+                .title(title)
                 .top(false)
                 .build();
         tConversationRepository.save(tConversation);
@@ -44,8 +43,9 @@ public class ConversationService extends BaseService {
         tConversationRepository.removeById(id);
     }
 
-    public void rename(ConversationRenameDTO conversationRenameDTO) {
-        TConversation tConversation = ConversationConvert.INSTANCE.parseRenameToEntity(conversationRenameDTO);
-        tConversationRepository.updateById(tConversation);
+    public void rename(String id, String title) {
+        tConversationRepository.lambdaUpdate().eq(TConversation::getId, id)
+                .set(TConversation::getTitle, title)
+                .update();
     }
 }

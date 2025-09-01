@@ -21,8 +21,7 @@ public class AiConfig {
         return ChatClient.builder(openAIChatModel)
                 .defaultSystem("你的名字叫小秋。")
                 .defaultAdvisors(new SimpleLoggerAdvisor())
-                .defaultOptions(ChatOptions.builder()
-                        .temperature(0.5).build())
+                .defaultOptions(ChatOptions.builder().temperature(0.5).build())
                 .build();
 
     }

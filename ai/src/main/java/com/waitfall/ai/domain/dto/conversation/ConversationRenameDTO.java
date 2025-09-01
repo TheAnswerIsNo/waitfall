@@ -3,6 +3,7 @@ package com.waitfall.ai.domain.dto.conversation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ConversationRenameDTO {
     @Schema(description = "会话ID")
     @NotBlank(message = "会话ID不能为空")

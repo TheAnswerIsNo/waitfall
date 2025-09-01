@@ -30,6 +30,6 @@ public class MessageSendDTO {
 
     @Schema(description = "最大消息数")
     @NotNull(message = "最大消息数不能为空")
-    @Max(value = 100, message = "最大消息数不能超过100")
+    @Max(value = 20, message = "最大消息数不能超过20")
     private Integer maxMessages;
 }
